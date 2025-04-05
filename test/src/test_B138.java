@@ -4,8 +4,8 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class test_D334 {
-   private static final Logger logger = Logger.getLogger(test_D334.class.getName());
+public class test_B138 {
+   private static final Logger logger = Logger.getLogger(test_B138.class.getName());
 
    // public static void main(String[] args) {
    // Scanner scanner = new Scanner(System.in); // 標準入力を読み取る
@@ -51,31 +51,48 @@ public class test_D334 {
    }
 
    private static int processInput(List<String> inputLines) {
-      if (inputLines.size() < 7) {
-         throw new IllegalArgumentException("入力データが不足しています。7行必要です。");
+      if (inputLines.size() < 2) {
+         throw new IllegalArgumentException("入力データが不足しています。少なくとも2行必要です。");
       }
 
       String[] Line1 = inputLines.get(0).split(" ");
-      int p_1 = Integer.parseInt(Line1[0]);
+      int H = Integer.parseInt(Line1[0]); // 行数
+      int W = Integer.parseInt(Line1[1]); // 列数
 
-      String[] Line2 = inputLines.get(1).split(" ");
-      int p_2 = Integer.parseInt(Line2[0]);
+      if (inputLines.size() < H + 1) {
+         throw new IllegalArgumentException("入力データが不足しています。指定された行数に対応するデータがありません。");
+      }
 
-      String[] Line3 = inputLines.get(2).split(" ");
-      int p_3 = Integer.parseInt(Line3[0]);
+      // 二次元配列を初期化
+      char[][] grid = new char[H][W];
 
-      String[] Line4 = inputLines.get(3).split(" ");
-      int p_4 = Integer.parseInt(Line4[0]);
+      // 2行目以降を1文字ずつ二次元配列に格納
+      for (int i = 0; i < H; i++) {
+         String line = inputLines.get(1 + i); // 2行目以降
+         if (line.length() != W) {
+            throw new IllegalArgumentException("行の長さが指定された列数と一致しません: " + line);
+         }
+         grid[i] = line.toCharArray(); // 1文字ずつ配列に格納
+      }
 
-      String[] Line5 = inputLines.get(4).split(" ");
-      int p_5 = Integer.parseInt(Line5[0]);
+      // // 二次元配列の内容を確認（デバッグ用）
+      // for (char[] row : grid) {
+      // System.out.println(Arrays.toString(row));
+      // }
+      int numDonut = 0;
+      for (int i = 1; i < H - 1; i++) {
+         for (int j = 1; j < W - 1; j++) {
+            if (grid[i][j] == '.') {
+               // 上下左右のマスを確認
+               if (grid[i - 1][j - 1] == '#' && grid[i - 1][j] == '#' && grid[i - 1][j + 1] == '#'
+                     && grid[i][j - 1] == '#' && grid[i][j + 1] == '#'
+                     && grid[i + 1][j - 1] == '#' && grid[i + 1][j] == '#' && grid[i + 1][j + 1] == '#') {
+                  numDonut++;
+               }
+            }
+         }
+      }
 
-      String[] Line6 = inputLines.get(5).split(" ");
-      int p_6 = Integer.parseInt(Line6[0]);
-
-      String[] Line7 = inputLines.get(6).split(" ");
-      int p_7 = Integer.parseInt(Line7[0]);
-
-      return p_1 + p_2 + p_3 + p_4 + p_5 + p_6 + p_7;
+      return numDonut;
    }
 }

@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.logging.Level;
 
-public class Main2 {
-    private static final Logger logger = Logger.getLogger(Main2.class.getName());
+public class example1 {
+    private static final Logger logger = Logger.getLogger(example1.class.getName());
 
     // public static void main(String[] args) {
     // List<String> inputLines = new ArrayList<>();
